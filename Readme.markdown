@@ -141,7 +141,11 @@ To execute the tests, you need a running PostgreSQL server with an empty
 database called _test_. You can start one using docker, e.g.:
 
 ```bash
-docker run --rm -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=test postgres:15-alpine
+docker run --rm -p 5432:5432 \
+    -e POSTGRES_HOST_AUTH_METHOD=trust \
+    -e POSTGRES_USER=postgres \
+    -e POSTGRES_DB=test \
+    postgres:15-alpine
 ```
 
  Tests are executed through cabal as follows:

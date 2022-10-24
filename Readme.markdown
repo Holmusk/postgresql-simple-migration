@@ -138,24 +138,16 @@ cabal configure --enable-tests && cabal build -j
 ```
 
 To execute the tests, you need a running PostgreSQL server with an empty
-database called _test_. Tests are executed through cabal as follows:
+database called _test_. You can start one using docker, e.g.:
+
+```bash
+docker run --rm -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=test postgres:15-alpine
+```
+
+ Tests are executed through cabal as follows:
 
 ```bash
 cabal configure --enable-tests && cabal test
-```
-
-To build the project in a cabal sandbox, use the following code:
-
-```bash
-cabal sandbox init
-cabal install -j --only-dependencies --enable-tests --disable-documentation
-cabal configure --enable-tests
-cabal test
-```
-
-To remove the generated cabal sandbox, use:
-```bash
-cabal sandbox delete
 ```
 
 ## To Do

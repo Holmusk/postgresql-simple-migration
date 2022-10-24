@@ -17,9 +17,6 @@ module Main (
     main
     ) where
 
-#if __GLASGOW_HASKELL__ < 710
-import           Control.Applicative
-#endif
 import           Control.Exception
 import qualified Data.ByteString.Char8                as BS8 (pack)
 import           Database.PostgreSQL.Simple           (SqlError (..),
@@ -48,8 +45,7 @@ main = getArgs >>= \case
 ppException :: IO a -> IO a
 ppException a = catch a ehandler
   where
-    ehandler e = maybe (throw e) (*> exitFailure)
-                 (pSqlError <$> fromException e)
+    ehandler e = maybe (throw e) ((*> exitFailure) . pSqlError) (fromException e)
     bsToString = T.unpack . T.decodeUtf8
     pSqlError e = mapM_ putStrLn
                   [ "SqlError:"

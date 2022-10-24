@@ -10,7 +10,6 @@
 -- The test entry-point for postgresql-simple-migration.
 
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main
@@ -24,5 +23,5 @@ import           Test.Hspec                               (hspec)
 
 main :: IO ()
 main = do
-    con <- connectPostgreSQL "dbname=test"
+    con <- connectPostgreSQL "host=localhost dbname=test user=postgres"
     withTransactionRolledBack con (hspec (migrationSpec con))

@@ -12,8 +12,6 @@
 -- For usage, see Readme.markdown.
 
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE DeriveFoldable    #-}
-{-# LANGUAGE DeriveFunctor     #-}
 {-# LANGUAGE DeriveTraversable #-}
 {-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -40,19 +38,11 @@ module Database.PostgreSQL.Simple.Migration
     , SchemaMigration(..)
     ) where
 
-#if __GLASGOW_HASKELL__ < 710
-import           Control.Applicative                ((<$>), (<*>))
-#endif
 import           Control.Monad                      (void, when)
 import qualified Crypto.Hash.MD5                    as MD5 (hash)
 import qualified Data.ByteString                    as BS (ByteString, readFile)
 import qualified Data.ByteString.Base64             as B64 (encode)
-import           Data.Foldable                      (Foldable)
 import           Data.List                          (isPrefixOf, sort)
-import           Data.Traversable                   (Traversable)
-#if __GLASGOW_HASKELL__ < 710
-import           Data.Monoid                        (Monoid (..))
-#endif
 import           Data.Time                          (LocalTime)
 import           Database.PostgreSQL.Simple         (Connection, Only (..),
                                                      execute, execute_, query,
@@ -263,17 +253,15 @@ data MigrationCommand
     -- ^ Performs a series of 'MigrationCommand's in sequence.
     deriving (Show, Eq, Read, Ord)
 
-#if __GLASGOW_HASKELL__ >= 804
+
 instance Semigroup MigrationCommand where
-    (<>) = mappend
-#endif
+    MigrationCommands xs <> MigrationCommands ys = MigrationCommands (xs ++ ys)
+    MigrationCommands xs <> y = MigrationCommands (xs ++ [y])
+    x <> MigrationCommands ys = MigrationCommands (x : ys)
+    x <> y = MigrationCommands [x, y]
 
 instance Monoid MigrationCommand where
     mempty = MigrationCommands []
-    mappend (MigrationCommands xs) (MigrationCommands ys) = MigrationCommands (xs ++ ys)
-    mappend (MigrationCommands xs) y = MigrationCommands (xs ++ [y])
-    mappend x (MigrationCommands ys) = MigrationCommands (x : ys)
-    mappend x y = MigrationCommands [x, y]
 
 -- | A sum-type denoting the result of a single migration.
 data CheckScriptResult

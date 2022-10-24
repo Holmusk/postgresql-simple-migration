@@ -12,7 +12,6 @@ category:                   Database
 build-type:                 Simple
 cabal-version:              >= 1.10
 description:                A PostgreSQL-simple schema migration utility
-
 extra-source-files:         License
                             Readme.markdown
                             Changelog.markdown
@@ -25,7 +24,9 @@ extra-source-files:         License
 
                             share/test/*.sql
                             share/test/scripts/*.sql
-tested-with: 
+tested-with:                GHC == 8.10.7,
+                            GHC == 9.0.2,
+                            GHC == 9.2.4
 
 source-repository head
     type:                   git

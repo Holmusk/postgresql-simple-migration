@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.16.0
+* Add support for GHC 9.2.4
+
 ## 0.1.15.0
 * Bumped dependencies
 

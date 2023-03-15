@@ -16,7 +16,6 @@ extra-source-files:         License
                             Readme.markdown
                             Changelog.markdown
 
-                            src/*.hs
                             src/Database/PostgreSQL/Simple/*.hs
 
                             test/*.hs

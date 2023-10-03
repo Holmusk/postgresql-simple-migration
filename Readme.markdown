@@ -1,5 +1,11 @@
 # PostgreSQL Migrations for Haskell
 
+> [!WARNING]  
+> This fork of [postgresql-simple-migration](https://github.com/ameingast/postgresql-simple-migration) is no longer maintained.
+> We switched to another fork [postgresql-migration](https://github.com/andrevdm/postgresql-migration) which is maintained and we recommend you do the same.
+
+-----------------------------------
+
 [![Build Status](https://api.travis-ci.org/ameingast/postgresql-simple-migration.png)](https://travis-ci.org/ameingast/postgresql-simple-migration)
 
 Welcome to postgresql-simple-migrations, a tool for helping you with
